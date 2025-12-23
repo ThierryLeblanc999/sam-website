@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAM — A buddy. There for you.</title>
+    <meta name="description" content="SAM is a grounded companion for men who hold it together but need a quiet space to stay present. Coming soon.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='none' stroke='%231a2e1a' stroke-width='6'/></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --forest-deep: #1a2e1a;
+            --forest-mid: #243424;
+            --forest-light: #2d402d;
+            --cream: #f5f2eb;
+            --cream-soft: rgba(245, 242, 235, 0.85);
+            --ember: #e8a84c;
+            --ember-glow: rgba(232, 168, 76, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            font-size: 16px;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: var(--forest-deep);
+            color: var(--cream);
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Subtle texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Soft gradient glow at bottom */
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 40%;
+            background: radial-gradient(ellipse at bottom, var(--ember-glow) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        /* Logo */
+        .logo-container {
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.3s forwards;
+        }
+        
+        .logo {
+            width: 160px;
+            height: auto;
+            filter: drop-shadow(0 0 60px var(--ember-glow));
+        }
+        
+        /* Main heading */
+        .tagline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            line-height: 1.4;
+            margin-bottom: 2.5rem;
+            color: var(--cream-soft);
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.6s forwards;
+        }
+        
+        /* Description */
+        .description {
+            max-width: 440px;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--cream-soft);
+            opacity: 0.75;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.9s forwards;
+        }
+        
+        /* Divider */
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: var(--cream);
+            opacity: 0.2;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 1.2s forwards;
+        }
+        
+        /* Coming soon */
+        .coming-soon {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--cream);
+            opacity: 0.5;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 1.4s forwards;
+        }
+        
+        /* Email signup */
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 320px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 1.6s forwards;
+        }
+        
+        .signup-form input[type="email"] {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: var(--forest-mid);
+            border: 1px solid var(--forest-light);
+            border-radius: 4px;
+            color: var(--cream);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+        
+        .signup-form input[type="email"]::placeholder {
+            color: var(--cream);
+            opacity: 0.4;
+        }
+        
+        .signup-form input[type="email"]:focus {
+            border-color: var(--ember);
+            background: var(--forest-light);
+        }
+        
+        .signup-form button {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: transparent;
+            border: 1px solid var(--cream);
+            border-radius: 4px;
+            color: var(--cream);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+        
+        .signup-form button:hover {
+            background: var(--cream);
+            color: var(--forest-deep);
+            opacity: 1;
+        }
+        
+        .signup-note {
+            font-size: 0.75rem;
+            color: var(--cream);
+            opacity: 0.35;
+            margin-top: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--cream);
+            opacity: 0.3;
+            letter-spacing: 0.05em;
+            z-index: 2;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 1.5rem;
+                padding-bottom: 5rem;
+            }
+            
+            .logo {
+                width: 130px;
+            }
+            
+            .description {
+                font-size: 0.95rem;
+            }
+            
+            footer {
+                position: relative;
+                bottom: auto;
+                margin-top: 3rem;
+                transform: none;
+                left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <!-- Logo -->
+        <div class="logo-container">
+            <!-- SVG Logo inline for reliability -->
+            <svg class="logo" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+                <!-- Imperfect circle (ensō-inspired) -->
+                <ellipse cx="100" cy="90" rx="75" ry="70" fill="none" stroke="#f5f2eb" stroke-width="8" stroke-linecap="round" opacity="0.9">
+                    <animate attributeName="stroke-dasharray" from="0 500" to="440 60" dur="2s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+                </ellipse>
+                
+                <!-- Ground/horizon line -->
+                <path d="M 35 115 Q 100 130 165 115" fill="none" stroke="#f5f2eb" stroke-width="3" opacity="0.6"/>
+                
+                <!-- Inner glow -->
+                <ellipse cx="100" cy="95" rx="50" ry="45" fill="url(#innerGlow)" opacity="0.7"/>
+                
+                <!-- Fire/flame -->
+                <path d="M 100 70 Q 108 85 100 105 Q 92 85 100 70" fill="#e8a84c" opacity="0.9">
+                    <animate attributeName="d" 
+                        values="M 100 72 Q 108 85 100 105 Q 92 85 100 72;
+                                M 100 68 Q 110 83 100 105 Q 90 83 100 68;
+                                M 100 72 Q 108 85 100 105 Q 92 85 100 72" 
+                        dur="3s" repeatCount="indefinite"/>
+                </path>
+                
+                <!-- SAM text -->
+                <text x="100" y="200" text-anchor="middle" fill="#f5f2eb" font-family="'DM Sans', sans-serif" font-size="42" font-weight="500" letter-spacing="8">SAM</text>
+                
+                <!-- Gradient definitions -->
+                <defs>
+                    <radialGradient id="innerGlow" cx="50%" cy="60%" r="50%">
+                        <stop offset="0%" stop-color="#e8a84c" stop-opacity="0.4"/>
+                        <stop offset="100%" stop-color="#e8a84c" stop-opacity="0"/>
+                    </radialGradient>
+                </defs>
+            </svg>
+        </div>
+        
+        <!-- Tagline -->
+        <h1 class="tagline">A buddy. There for you.</h1>
+        
+        <!-- Description -->
+        <p class="description">
+            A grounded companion for men who hold it together—but sometimes need a quiet space to stay present.
+            <br><br>
+            Not a coach. Not a fix. Just a steady presence.
+        </p>
+        
+        <!-- Divider -->
+        <div class="divider"></div>
+        
+        <!-- Coming soon -->
+        <p class="coming-soon">Coming Soon</p>
+        
+        <!-- Email signup -->
+        <form class="signup-form" action="#" method="POST" onsubmit="handleSubmit(event)">
+            <input type="email" name="email" placeholder="Your email" required aria-label="Email address">
+            <button type="submit">Stay in the loop</button>
+            <p class="signup-note">No spam. Just a quiet heads-up when we're ready.</p>
+        </form>
+    </main>
+    
+    <footer>
+        getsam.care
+    </footer>
+    
+    <script>
+        function handleSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const email = form.email.value;
+            const button = form.querySelector('button');
+            
+            // Simple feedback - replace with actual form handling
+            button.textContent = 'Thank you';
+            button.style.background = 'var(--ember)';
+            button.style.borderColor = 'var(--ember)';
+            button.style.color = 'var(--forest-deep)';
+            button.style.opacity = '1';
+            button.disabled = true;
+            
+            // In production, send to your email service here
+            console.log('Email submitted:', email);
+            
+            // Reset after 3 seconds
+            setTimeout(() => {
+                button.textContent = 'Stay in the loop';
+                button.style.background = 'transparent';
+                button.style.borderColor = 'var(--cream)';
+                button.style.color = 'var(--cream)';
+                button.style.opacity = '0.7';
+                button.disabled = false;
+                form.reset();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
