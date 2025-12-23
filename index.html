@@ -319,7 +319,7 @@
         <p class="coming-soon">Coming Soon</p>
         
         <!-- Email signup -->
-        <form class="signup-form" action="#" method="POST" onsubmit="handleSubmit(event)">
+        <form class="signup-form" action="https://formspree.io/f/mvzpvjyd" method="POST">
             <input type="email" name="email" placeholder="Your email" required aria-label="Email address">
             <button type="submit">Stay in the loop</button>
             <p class="signup-note">No spam. Just a quiet heads-up when we're ready.</p>
@@ -330,35 +330,6 @@
         getsam.care
     </footer>
     
-    <script>
-        function handleSubmit(e) {
-            e.preventDefault();
-            const form = e.target;
-            const email = form.email.value;
-            const button = form.querySelector('button');
-            
-            // Simple feedback - replace with actual form handling
-            button.textContent = 'Thank you';
-            button.style.background = 'var(--ember)';
-            button.style.borderColor = 'var(--ember)';
-            button.style.color = 'var(--forest-deep)';
-            button.style.opacity = '1';
-            button.disabled = true;
-            
-            // In production, send to your email service here
-            console.log('Email submitted:', email);
-            
-            // Reset after 3 seconds
-            setTimeout(() => {
-                button.textContent = 'Stay in the loop';
-                button.style.background = 'transparent';
-                button.style.borderColor = 'var(--cream)';
-                button.style.color = 'var(--cream)';
-                button.style.opacity = '0.7';
-                button.disabled = false;
-                form.reset();
-            }, 3000);
-        }
-    </script>
+
 </body>
 </html>
