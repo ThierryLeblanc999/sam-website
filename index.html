@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAM — A buddy. There for you.</title>
     <meta name="description" content="SAM is a grounded companion for men who hold it together but need a quiet space to stay present. Coming soon.">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='none' stroke='%231a2e1a' stroke-width='6'/></svg>">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --forest-deep: #1a2e1a;
@@ -213,6 +213,17 @@
             margin-top: 0.5rem;
         }
         
+        /* Honeypot - invisible to humans, bots fill it */
+        .hp-field {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            opacity: 0;
+            height: 0;
+            width: 0;
+            z-index: -1;
+        }
+        
         /* Footer */
         footer {
             position: fixed;
@@ -273,7 +284,7 @@
                 <ellipse cx="100" cy="90" rx="75" ry="70" fill="none" stroke="#f5f2eb" stroke-width="8" stroke-linecap="round" opacity="0.9">
                     <animate attributeName="stroke-dasharray" from="0 500" to="440 60" dur="2s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
                 </ellipse>
-                
+
                 <!-- Ground/horizon line -->
                 <path d="M 35 115 Q 100 130 165 115" fill="none" stroke="#f5f2eb" stroke-width="3" opacity="0.6"/>
                 
@@ -320,16 +331,17 @@
         
         <!-- Email signup -->
         <form class="signup-form" action="https://formspree.io/f/mvzpvjyd" method="POST">
+            <!-- Honeypot field - hidden from humans, bots fill it and get rejected -->
+            <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off">
+            
             <input type="email" name="email" placeholder="Your email" required aria-label="Email address">
             <button type="submit">Stay in the loop</button>
             <p class="signup-note">No spam. Just a quiet heads-up when we're ready.</p>
         </form>
     </main>
-    
+
     <footer>
         getsam.care
     </footer>
-    
-
 </body>
 </html>
